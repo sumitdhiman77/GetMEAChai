@@ -10,7 +10,7 @@ export const authoptions = NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   callbacks: {
     async signIn({ user, profile }) {
       await connectDB();
