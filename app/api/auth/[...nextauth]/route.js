@@ -30,7 +30,6 @@ export const authoptions = NextAuth({
     //   clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
     // }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, profile }) {
       await connectDB();
@@ -58,6 +57,7 @@ export const authoptions = NextAuth({
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { authoptions as GET, authoptions as POST };
