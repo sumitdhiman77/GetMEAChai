@@ -30,7 +30,7 @@ export const POST = async (req) => {
       { new: true }
     );
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URL}/${updatedPayment.to_user}?paymentdone=true`
+      `${process.env.NEXTAUTH_URL}/${updatedPayment.to_user}?paymentdone=true`
     );
   } else {
     return NextResponse.json({
