@@ -51,8 +51,8 @@ export const authoptions = NextAuth({
     async session({ session, token, user }) {
       console.log(`session is: ${JSON.stringify(session)}`);
       console.log(`token is: ${JSON.stringify(token)}`);
-      console.log(`user is: ${JSON.stringify(user)}`);
       const dbUser = await User.findOne({ email: session.user.email }).lean();
+      console.log(dbUser);
       if (dbUser) {
         session.user.name = dbUser.username;
         session.user.id = dbUser._id; // Example: Add user ID to session
@@ -62,7 +62,7 @@ export const authoptions = NextAuth({
       return session;
     },
   },
-  secret: process.env.NEXT_AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { authoptions as GET, authoptions as POST };

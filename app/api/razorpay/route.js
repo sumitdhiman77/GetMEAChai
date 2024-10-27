@@ -6,6 +6,10 @@ import User from "@/app/models/User";
 export const POST = async (req) => {
   await connectDB();
   let body = await req.formData();
+  console.log(
+    "NEXT_PUBLIC_NEXTAUTH_URL:",
+    process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+  );
   body = Object.fromEntries(body);
   // check if razorpayOrderId id is present on the server
   let p = await Payment.findOne({ oid: body.razorpay_order_id });
@@ -30,7 +34,7 @@ export const POST = async (req) => {
       { new: true }
     );
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/${updatedPayment.to_user}?paymentdone=true`
+      `${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}/${updatedPayment.to_user}?paymentdone=true`
     );
   } else {
     return NextResponse.json({
