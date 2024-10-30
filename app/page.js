@@ -3,8 +3,6 @@ import Image from "next/image";
 // import { useSession } from "next-auth/react";
 
 export default function Home() {
-  console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
-  console.log("NEXT_PUBLIC_NEXTAUTH_URL:", process.env.NEXT_PUBLIC_VERCEL_URL);
   return (
     <>
       <div className="flex justify-center flex-col items-center text-white h-[44vh] gap-2">

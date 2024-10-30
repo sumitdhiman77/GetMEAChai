@@ -46,10 +46,7 @@ const PaymentPage = ({ username }) => {
     const dbPayments = await fetchPayments(username);
     setPayments(dbPayments);
   };
-  console.log(
-    "NEXT_PUBLIC_NEXTAUTH_URL:",
-    process.env.NEXT_PUBLIC_NEXTAUTH_URL
-  );
+  console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
   const pay = async (amount) => {
     const a = await initiate(amount, username, paymentForm);
     const orderId = a.id;
@@ -63,7 +60,7 @@ const PaymentPage = ({ username }) => {
       description: "Test Transaction",
       image: "https://example.com/your_logo",
       order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the "response of Step 1
-      callback_url: `${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}/api/razorpay`,
+      callback_url: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/razorpay`,
       prefill: {
         //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         name: "Gaurav Kumar", //your customer's name
