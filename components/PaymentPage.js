@@ -15,28 +15,32 @@ const PaymentPage = ({ username }) => {
   const [payments, setPayments] = useState([]);
   const searchParams = useSearchParams();
   const router = useRouter();
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    if (searchParams.get("paymentdone") == "true") {
-      toast("thanks for donation!", {
-        position: "top-right",
-        autoClose: 1000,
-        limit: 1,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: "bounce",
-        draggable: true,
-      });
-    }
-    router.push(`/${username}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  {
+    ("use client");
+    useEffect(() => {
+      getData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    useEffect(() => {
+      if (searchParams.get("paymentdone") == "true") {
+        toast("thanks for donation!", {
+          position: "top-right",
+          autoClose: 1000,
+          limit: 1,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: "bounce",
+          draggable: true,
+        });
+      }
+      router.push(`/${username}`);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  }
+
   const handleChange = (e) => {
     setPaymentForm({ ...paymentForm, [e.target.name]: e.target.value });
   };
