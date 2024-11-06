@@ -16,7 +16,10 @@ const Login = () => {
         Login to get your fans support you
       </h1>
       <div className="grid gap-2 w-[250px] mx-auto">
-        <button className=" flex items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+        <button
+          onClick={() => signIn("google")}
+          className=" flex items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        >
           <svg
             className="h-6 w-6 mr-2"
             xmlns="http://www.w3.org/2000/svg"
