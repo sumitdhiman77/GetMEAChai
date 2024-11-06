@@ -46,7 +46,6 @@ const PaymentPage = ({ username }) => {
     const dbPayments = await fetchPayments(username);
     setPayments(dbPayments);
   };
-  console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
   const pay = async (amount) => {
     const a = await initiate(amount, username, paymentForm);
     const orderId = a.id;

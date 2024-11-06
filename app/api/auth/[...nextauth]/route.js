@@ -33,8 +33,6 @@ export const authoptions = NextAuth({
   callbacks: {
     async signIn({ user, profile }) {
       await connectDB();
-      console.log(`User: ${JSON.stringify(user)}`);
-      console.log(`Profile: ${JSON.stringify(profile)}`);
       const currentUser = await User.findOne({ email: user.email }).lean();
       if (!currentUser) {
         // Create a new user if not found
@@ -49,10 +47,7 @@ export const authoptions = NextAuth({
       return true;
     },
     async session({ session, token, user }) {
-      console.log(`session is: ${JSON.stringify(session)}`);
-      console.log(`token is: ${JSON.stringify(token)}`);
       const dbUser = await User.findOne({ email: session.user.email }).lean();
-      console.log(dbUser);
       if (dbUser) {
         session.user.name = dbUser.username;
         session.user.id = dbUser._id; // Example: Add user ID to session

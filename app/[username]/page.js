@@ -9,7 +9,6 @@ const Username = async ({ params }) => {
   const checkUser = async () => {
     await connectDB();
     let u = await User.findOne({ username: params.username });
-    console.log(`u is:${u}`);
     if (!u) {
       return notFound();
     }
