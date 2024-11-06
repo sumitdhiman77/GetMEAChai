@@ -24,7 +24,7 @@ export const initiate = async (amount, to_username, paymentForm) => {
     //   },
     // });
   } catch (error) {
-    // throw new Error("Database connection failed");
+    throw new Error("Database connection failed");
   }
 
   let options = {
