@@ -11,7 +11,6 @@ const instance = new Razorpay({
   key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Use your actual key ID env variable name
   key_secret: process.env.RAZORPAY_SECRET_KEY,
 });
-console.log(instance);
 
 export const POST = async (req) => {
   await connectDB();
@@ -72,7 +71,6 @@ export const POST = async (req) => {
       );
     }
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }
