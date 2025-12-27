@@ -17,7 +17,7 @@ const Dashboard = () => {
       getData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user?.name]);
+  }, []);
   const getData = async () => {
     const username = session?.user?.name;
     let u = await fetchUser(username);

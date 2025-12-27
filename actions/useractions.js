@@ -1,28 +1,19 @@
 "use server";
 import Razorpay from "razorpay";
 import Payment from "@/app/models/Payment";
-import connectDB, { getConnectionState } from "@/db/connectDb";
+import { connectDB } from "@/lib/db";
 import User from "@/app/models/User";
 
 export const initiate = async (amount, to_username, paymentForm) => {
   try {
     await connectDB();
     // fetch the secret of user who is getting Payment
-    const user = await User.findOne({ username: to_username }).lean();
-    const secret = process.env.RAZORPAY_KEY_SECRET;
+    let user = await User.findOne({ username: to_username });
+    user = JSON.parse(JSON.stringify(user));
     var instance = new Razorpay({
-      key_id: user.razorpayid,
-      key_secret: secret,
+      key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_SECRET_KEY,
     });
-    // instance.orders.create({
-    //   amount: 50000,
-    //   currency: "INR",
-    //   receipt: "receipt#1",
-    //   notes: {
-    //     key1: "value3",
-    //     key2: "value2",
-    //   },
-    // });
   } catch (error) {
     throw new Error("Database connection failed");
   }
@@ -45,7 +36,8 @@ export const initiate = async (amount, to_username, paymentForm) => {
 export const fetchUser = async (username) => {
   try {
     await connectDB();
-    let user = User.findOne({ username: username }).lean();
+    let user = await User.findOne({ username: username });
+    user = JSON.parse(JSON.stringify(user));
     if (!user) {
       return null; // or throw an error if you prefer
     }
@@ -57,9 +49,9 @@ export const fetchUser = async (username) => {
 export const fetchPayments = async (username) => {
   await connectDB();
   let p = await Payment.find({ to_user: username, done: true })
-    .sort({ amount: -1 })
-    .limit(10)
-    .lean();
+    .sort({ createdAt: -1 })
+    .limit(10);
+  p = JSON.parse(JSON.stringify(p));
   return p;
 };
 
@@ -68,7 +60,8 @@ export const updateProfile = async (data, oldUsername) => {
   const ndata = Object.fromEntries(data);
   // ? if the username is being updated check if username is available
   if (oldUsername !== ndata.username) {
-    let u = await User.findOne({ username: ndata.username }).lean();
+    let u = await User.findOne({ username: ndata.username });
+    u = JSON.parse(JSON.stringify(u));
     if (u) {
       return { error: "username is already exist" };
     }

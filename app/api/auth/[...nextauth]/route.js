@@ -1,9 +1,8 @@
-
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import User from "@/app/models/User";
-import connectDB from "@/db/connectDb";
+import { connectDB } from "@/lib/db";
 
 export const authoptions = NextAuth({
   providers: [

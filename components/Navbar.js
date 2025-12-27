@@ -23,7 +23,7 @@ const Navbar = () => {
           <>
             <button
               onClick={() => setShowdropdown(!showdropdown)}
-              onBlur={() => setTimeout(() => setShowdropdown(false), 100)}
+              onBlur={() => setTimeout(() => setShowdropdown(false), 200)}
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
               className="text-white mr-2 sm:mx-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 sm:font-medium sm:rounded-lg text-xs sm:text-sm px-1 sm:px-5 py-1 sm:py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -55,7 +55,7 @@ const Navbar = () => {
             >
               <ul
                 className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                ariaLabelledBy="dropdownDefaultButton"
+                aria-labelledby="dropdownDefaultButton"
               >
                 <li>
                   <Link
