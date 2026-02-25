@@ -36,23 +36,39 @@ const PaymentPage = ({ username }) => {
   };
 
   const pay = async (amount) => {
-    if (typeof window.Razorpay === "undefined") {
-      toast.error("Razorpay is still loading. Please wait.");
-      return;
+    try {
+      const res = await fetch("/api/initiate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount,
+          username,
+          paymentForm,
+        }),
+      });
+
+      if (!res.ok) {
+        console.error("API failed");
+        return;
+      }
+
+      const order = await res.json();
+
+      const rzp = new window.Razorpay({
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount,
+        currency: "INR",
+        name: "GetMeAChai",
+        order_id: order.id,
+        callback_url: `${window.location.origin}/api/razorpay`,
+      });
+
+      rzp.open();
+    } catch (err) {
+      console.error("Payment error:", err);
     }
-    const order = await initiate(amount, username, paymentForm);
-
-    const rzp = new Razorpay({
-      key: process.env.RAZORPAY_KEY_ID,
-      amount,
-      currency: "INR",
-      name: "GetMeAChai",
-      order_id: order.id,
-      callback_url: `${window.location.origin}/api/razorpay`,
-      theme: { color: "#00e0ff" },
-    });
-
-    rzp.open();
   };
 
   return (
