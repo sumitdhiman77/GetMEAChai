@@ -1,4 +1,3 @@
-"use server";
 import Razorpay from "razorpay";
 import Payment from "@/app/models/Payment";
 import { connectDB } from "@/lib/db";
@@ -11,7 +10,7 @@ export const initiate = async (amount, to_username, paymentForm) => {
     let user = await User.findOne({ username: to_username });
     user = JSON.parse(JSON.stringify(user));
     var instance = new Razorpay({
-      key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_SECRET_KEY,
     });
   } catch (error) {
@@ -69,7 +68,7 @@ export const updateProfile = async (data, oldUsername) => {
     // now update all username in payments table
     await Payment.updateMany(
       { to_user: oldUsername },
-      { to_user: ndata.username }
+      { to_user: ndata.username },
     );
   }
   let a = await User.updateOne({ email: ndata.email }, ndata);

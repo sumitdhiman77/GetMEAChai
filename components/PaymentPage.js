@@ -43,7 +43,7 @@ const PaymentPage = ({ username }) => {
     const order = await initiate(amount, username, paymentForm);
 
     const rzp = new Razorpay({
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      key: process.env.RAZORPAY_KEY_ID,
       amount,
       currency: "INR",
       name: "GetMeAChai",

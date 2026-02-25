@@ -6,7 +6,7 @@ import Razorpay from "razorpay";
 import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils";
 // Create a Razorpay instance to access the utility function
 const instance = new Razorpay({
-  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Use your actual key ID env variable name
+  key_id: process.env.RAZORPAY_KEY_ID, // Use your actual key ID env variable name
   key_secret: process.env.RAZORPAY_SECRET_KEY,
 });
 export const POST = async (req) => {
