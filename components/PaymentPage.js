@@ -58,7 +58,12 @@ const PaymentPage = ({ username }) => {
   return (
     <>
       <ToastContainer />
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+      <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="afterInteractive"
+        onLoad={() => console.log("Razorpay Loaded")}
+        onError={() => console.log("Razorpay failed to load")}
+      />
 
       <div className="bg-[#06080f] min-h-screen text-white pb-20">
         {/* FULL SCREEN COVER */}
