@@ -1,12 +1,12 @@
 "use server";
 
 import Razorpay from "razorpay";
-import Payment from "@/models/Payment";
-import connectDb from "@/db/connectDB";
-import User from "@/models/User";
+import Payment from "@/app/models/Payment";
+import { connectDB } from "@/lib/db";
+import User from "@/app/models/User";
 
 export const initiate = async (amount, to_username, paymentform) => {
-  await connectDb();
+  await connectDB();
   // fetch the secret of the user who is getting the payment
   let user = await User.findOne({ username: to_username });
   const secret = user.razorpaysecret;
@@ -33,14 +33,14 @@ export const initiate = async (amount, to_username, paymentform) => {
 };
 
 export const fetchuser = async (username) => {
-  await connectDb();
+  await connectDB();
   let u = await User.findOne({ username: username });
   let user = u.toObject({ flattenObjectIds: true });
   return user;
 };
 
 export const fetchpayments = async (username) => {
-  await connectDb();
+  await connectDB();
   // find all payments sorted by decreasing order of amount and flatten object ids
   let p = await Payment.find({ to_user: username, done: true })
     .sort({ amount: -1 })
@@ -50,7 +50,7 @@ export const fetchpayments = async (username) => {
 };
 
 export const updateProfile = async (data, oldusername) => {
-  await connectDb();
+  await connectDB();
   let ndata = Object.fromEntries(data);
 
   // If the username is being updated, check if username is available

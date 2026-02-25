@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils";
-import Payment from "@/models/Payment";
-import Razorpay from "razorpay";
-import connectDb from "@/db/connectDB";
-import User from "@/models/User";
+import Payment from "@/app/models/Payment";
+
+import { connectDB } from "@/lib/db";
+import User from "@/app/models/User";
 
 export const POST = async (req) => {
-  await connectDb();
+  await connectDB();
   let body = await req.formData();
   body = Object.fromEntries(body);
 
