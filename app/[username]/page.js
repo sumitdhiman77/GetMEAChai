@@ -1,11 +1,11 @@
-"use client";
+/* eslint-disable react/no-unescaped-entities */ zz;
 import React from "react";
 import PaymentPage from "@/components/PaymentPage";
 import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/db";
 import User from "../models/User";
 
-const Username = ({ params }) => {
+const Username = async ({ params }) => {
   // if username is not present in database show, 404
   const checkUser = async () => {
     await connectDB();
@@ -15,7 +15,7 @@ const Username = ({ params }) => {
       return notFound();
     }
   };
-  checkUser();
+  await checkUser();
   const username = decodeURI(params.username);
   return <PaymentPage username={username} />;
 };

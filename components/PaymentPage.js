@@ -13,7 +13,7 @@ const PaymentPage = ({ username }) => {
   const [paymentForm, setPaymentForm] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [payments, setPayments] = useState([]);
-  const router = useRouter();
+  const router = user();
   const sp = useSearchParams();
 
   useEffect(() => {
