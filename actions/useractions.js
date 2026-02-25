@@ -1,76 +1,71 @@
-import Razorpay from "razorpay";
-import Payment from "@/app/models/Payment";
-import { connectDB } from "@/lib/db";
-import User from "@/app/models/User";
+"use server";
 
-export const initiate = async (amount, to_username, paymentForm) => {
-  try {
-    await connectDB();
-    // fetch the secret of user who is getting Payment
-    let user = await User.findOne({ username: to_username });
-    user = JSON.parse(JSON.stringify(user));
-    var instance = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_SECRET_KEY,
-    });
-  } catch (error) {
-    throw new Error("Database connection failed");
-  }
+import Razorpay from "razorpay";
+import Payment from "@/models/Payment";
+import connectDb from "@/db/connectDB";
+import User from "@/models/User";
+
+export const initiate = async (amount, to_username, paymentform) => {
+  await connectDb();
+  // fetch the secret of the user who is getting the payment
+  let user = await User.findOne({ username: to_username });
+  const secret = user.razorpaysecret;
+
+  var instance = new Razorpay({ key_id: user.razorpayid, key_secret: secret });
 
   let options = {
     amount: Number.parseInt(amount),
     currency: "INR",
   };
+
   let x = await instance.orders.create(options);
+
   // create a payment object which shows a pending payment in the database
   await Payment.create({
     oid: x.id,
     amount: amount / 100,
     to_user: to_username,
-    name: paymentForm.name,
-    message: paymentForm.message,
+    name: paymentform.name,
+    message: paymentform.message,
   });
+
   return x;
 };
-export const fetchUser = async (username) => {
-  try {
-    await connectDB();
-    let user = await User.findOne({ username: username });
-    user = JSON.parse(JSON.stringify(user));
-    if (!user) {
-      return null; // or throw an error if you prefer
-    }
-    return user;
-  } catch (error) {
-    throw new Error("Failed to fetch user");
-  }
+
+export const fetchuser = async (username) => {
+  await connectDb();
+  let u = await User.findOne({ username: username });
+  let user = u.toObject({ flattenObjectIds: true });
+  return user;
 };
-export const fetchPayments = async (username) => {
-  await connectDB();
+
+export const fetchpayments = async (username) => {
+  await connectDb();
+  // find all payments sorted by decreasing order of amount and flatten object ids
   let p = await Payment.find({ to_user: username, done: true })
-    .sort({ createdAt: -1 })
-    .limit(10);
-  p = JSON.parse(JSON.stringify(p));
+    .sort({ amount: -1 })
+    .limit(10)
+    .lean();
   return p;
 };
 
-export const updateProfile = async (data, oldUsername) => {
-  await connectDB();
-  const ndata = Object.fromEntries(data);
-  // ? if the username is being updated check if username is available
-  if (oldUsername !== ndata.username) {
+export const updateProfile = async (data, oldusername) => {
+  await connectDb();
+  let ndata = Object.fromEntries(data);
+
+  // If the username is being updated, check if username is available
+  if (oldusername !== ndata.username) {
     let u = await User.findOne({ username: ndata.username });
-    u = JSON.parse(JSON.stringify(u));
     if (u) {
-      return { error: "username is already exist" };
+      return { error: "Username already exists" };
     }
     await User.updateOne({ email: ndata.email }, ndata);
-    // now update all username in payments table
+    // Now update all the usernames in the Payments table
     await Payment.updateMany(
-      { to_user: oldUsername },
+      { to_user: oldusername },
       { to_user: ndata.username },
     );
+  } else {
+    await User.updateOne({ email: ndata.email }, ndata);
   }
-  let a = await User.updateOne({ email: ndata.email }, ndata);
-  return a;
 };
