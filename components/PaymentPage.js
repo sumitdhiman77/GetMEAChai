@@ -9,11 +9,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PaymentPage = ({ username }) => {
-  const { data: session } = useSession();
   const [paymentForm, setPaymentForm] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [payments, setPayments] = useState([]);
-  const router = user();
   const sp = useSearchParams();
 
   useEffect(() => {
