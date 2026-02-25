@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils";
 import Payment from "@/app/models/Payment";
-
 import { connectDB } from "@/lib/db";
 import User from "@/app/models/User";
 
