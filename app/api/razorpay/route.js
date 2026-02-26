@@ -44,10 +44,10 @@ export const POST = async (req) => {
       { new: true },
     );
 
-    const origin = req.headers.get("origin");
+    // const origin = req.headers.get("origin");
 
     return NextResponse.redirect(
-      `${origin}/${updatedPayment.to_user}?paymentdone=true`,
+      `process.env.NEXT_PUBLIC_URL/${updatedPayment.to_user}?paymentdone=true`,
       { status: 303 },
     );
   } catch (error) {
