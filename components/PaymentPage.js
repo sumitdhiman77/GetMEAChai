@@ -40,7 +40,7 @@ const PaymentPage = ({ username }) => {
         transition: Bounce,
       });
     }
-    router.push(`/${username}`);
+    router.replace(`/${username}`);
   }, [searchParams, username, router]);
 
   const handleChange = (e) => {

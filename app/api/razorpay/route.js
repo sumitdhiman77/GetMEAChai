@@ -13,7 +13,7 @@ export const POST = async (req) => {
     const payment = await Payment.findOne({
       oid: body.razorpay_order_id,
     });
-
+    console.log("payment is:", payment);
     if (!payment) {
       return NextResponse.json(
         { success: false, message: "Order Id not found" },
