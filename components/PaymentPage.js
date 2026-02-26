@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Script from "next/script";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { fetchUser, fetchPayments, initiate } from "@/actions/useractions";
 import { ToastContainer, toast } from "react-toastify";
@@ -33,7 +32,6 @@ const PaymentPage = ({ username }) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     }
     router.replace(`/${username}`);
