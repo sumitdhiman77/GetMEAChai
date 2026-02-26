@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { fetchUser, updateProfile } from "@/actions/useractions";
-import { Bounce } from "react-toastify";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Dashboard = () => {
@@ -38,7 +37,6 @@ const Dashboard = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      transition: Bounce,
       draggable: true,
     });
   };
