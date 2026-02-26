@@ -1,4 +1,3 @@
-"use server";
 import Razorpay from "razorpay";
 import Payment from "@/app/models/Payment";
 import { connectDB } from "@/lib/db";
@@ -18,10 +17,11 @@ export const initiate = async (amount, to_username, paymentForm) => {
     throw new Error("Database connection failed");
   }
 
-  let options = {
+  var options = {
     amount: Number.parseInt(amount),
     currency: "INR",
   };
+
   let x = await instance.orders.create(options);
   // create a payment object which shows a pending payment in the database
   await Payment.create({

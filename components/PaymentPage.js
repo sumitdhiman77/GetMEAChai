@@ -79,6 +79,7 @@ const PaymentPage = ({ username }) => {
 
     var rzp1 = new Razorpay(options);
     rzp1.open();
+    e.preventDefault();
   };
 
   return (

@@ -6,7 +6,6 @@ import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils"
 export const POST = async (req) => {
   try {
     await connectDB();
-
     let body = await req.formData();
     body = Object.fromEntries(body);
 
