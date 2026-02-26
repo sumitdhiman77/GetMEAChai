@@ -64,12 +64,15 @@ const PaymentPage = ({ username }) => {
       <div className="bg-[#06080f] min-h-screen text-white pb-20">
         {/* FULL SCREEN COVER */}
         <div className="relative w-full h-72 md:h-[55vh]">
-          <Image
-            src={currentUser.coverpic}
-            alt="Cover"
-            fill
-            className="object-cover opacity-90"
-          />
+          {currentUser?.profilepic && (
+            <Image
+              src={currentUser.profilepic}
+              alt="Profile"
+              width={150}
+              height={150}
+              className="rounded-full border-4 border-cyan-400 shadow-[0_0_30px_#00e0ff] mx-auto"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#06080f]" />
         </div>
 
