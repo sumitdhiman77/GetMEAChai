@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import Payment from "@/app/models/Payment";
-import User from "@/app/models/User";
 import { connectDB } from "@/lib/db";
 import Razorpay from "razorpay";
 // Import the razorpay instance (you need to make sure this is correctly set up with your keys)
