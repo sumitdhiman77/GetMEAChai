@@ -1,3 +1,4 @@
+"use server";
 import Razorpay from "razorpay";
 import Payment from "@/app/models/Payment";
 import { connectDB } from "@/lib/db";
