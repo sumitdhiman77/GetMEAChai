@@ -9,10 +9,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PaymentPage = ({ username }) => {
+  const { data: session } = useSession();
   const [paymentForm, setPaymentForm] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [payments, setPayments] = useState([]);
-  const sp = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     loadData();
@@ -36,6 +37,10 @@ const PaymentPage = ({ username }) => {
   };
 
   const pay = async (amount) => {
+    if (typeof window.Razorpay === "undefined") {
+      toast.error("Razorpay is still loading. Please wait.");
+      return;
+    }
     const order = await initiate(amount, username, paymentForm);
 
     const rzp = new Razorpay({
@@ -54,25 +59,17 @@ const PaymentPage = ({ username }) => {
   return (
     <>
       <ToastContainer />
-      <Script
-        src="https://checkout.razorpay.com/v1/checkout.js"
-        strategy="afterInteractive"
-        onLoad={() => console.log("Razorpay Loaded")}
-        onError={() => console.log("Razorpay failed to load")}
-      />
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
 
       <div className="bg-[#06080f] min-h-screen text-white pb-20">
         {/* FULL SCREEN COVER */}
         <div className="relative w-full h-72 md:h-[55vh]">
-          {currentUser?.profilepic && (
-            <Image
-              src={currentUser.profilepic}
-              alt="Profile"
-              width={150}
-              height={150}
-              className="rounded-full border-4 border-cyan-400 shadow-[0_0_30px_#00e0ff] mx-auto"
-            />
-          )}
+          <Image
+            src={currentUser.coverpic}
+            alt="Cover"
+            fill
+            className="object-cover opacity-90"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#06080f]" />
         </div>
 
