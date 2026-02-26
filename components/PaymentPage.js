@@ -11,11 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const PaymentPage = ({ username }) => {
   // const { data: session } = useSession()
 
-  const [paymentForm, setPaymentForm] = useState({
-    name: "",
-    message: "",
-    amount: "",
-  });
+  const [paymentForm, setPaymentForm] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [payments, setPayments] = useState([]);
   const searchParams = useSearchParams();
@@ -59,7 +55,7 @@ const PaymentPage = ({ username }) => {
     let a = await initiate(amount, username, paymentForm);
     let orderId = a.id;
     var options = {
-      key: currentUser.razorpayid, // Enter the Key ID generated from the Dashboard
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
       amount: amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: "INR",
       name: "Get Me A Chai", //your business name
