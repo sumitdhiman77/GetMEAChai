@@ -23,6 +23,7 @@ const PaymentPage = ({ username }) => {
         autoClose: 1500,
       });
     }
+    router.push(`/${username}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
